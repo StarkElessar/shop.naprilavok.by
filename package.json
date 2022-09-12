@@ -1,12 +1,12 @@
 {
-  "name": "fls-gulp",
+  "name": "naprilavok",
   "version": "1.0.0",
-  "description": "Сборка gulp",
+  "description": "Landing Page для продажи теплиц",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Start",
+  "author": "Chevdar Sergei <serj.elessar@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.27.5",
