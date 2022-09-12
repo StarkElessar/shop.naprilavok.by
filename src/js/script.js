@@ -2,7 +2,6 @@
 @@include('./lib/lazyload.min.js')
 
 @@include('./plugins/it-chief-slider.js')
-@@include('./plugins/countdown.js')
 
 @@include('./Data.js')
 @@include('./modules/renderHTML.js')
@@ -16,15 +15,18 @@
 @@include('./modules/chiefSliderInit.js')
 @@include('./modules/maskedInputInit.js')
 @@include('./modules/sendingDataFromForms.js')
-@@include('./modules/creditStatus.js')
 
 @@include('./plugins/loading-yandex-map.js')
 
+const header = document.querySelector('#nav-header')
+const firstScreen = document.querySelector('#first-screen')
 
-window.addEventListener('scroll', () => {
-  const header = document.querySelector('#nav-header')
-  header.classList.toggle('sticky', document.documentElement.scrollTop > 400)
+const headerStickyObserver = new IntersectionObserver(([entry]) => {
+  header.classList.toggle('sticky', !entry.isIntersecting)
 })
+
+headerStickyObserver.observe(firstScreen)
+
 // Фикс дергания экрана при появлении Модального окна
 const TIMEOUT                 = 280
 const body                    = document.querySelector('body')
@@ -41,64 +43,49 @@ const closeBtnModalFeedback   = document.querySelector('.feedback-request__close
 if (showModalLegalInfoBtn && closeBtnModalLegalInfo) {
   showModalLegalInfoBtn.onclick = () => {
     modalLegalInfo.classList.add('show')
-    setBodyLock()
+    bodyToggleLock(true)
   }
   closeBtnModalLegalInfo.onclick = () => {
     modalLegalInfo.classList.remove('show')
-    setBodyUnLock()
+    bodyToggleLock(false)
+    setTransition(false)
   }
 }
-
-if (showModalFeedbackBtns.length > 0 && closeBtnModalFeedback) {
+if (showModalFeedbackBtns && closeBtnModalFeedback) {
   showModalFeedbackBtns.forEach((btn) => {
     btn.onclick = () => {
       modalFeedbackRequest.classList.add('show')
-      setBodyLock()
+      bodyToggleLock(true)
     }
   })
   closeBtnModalFeedback.onclick = () => {
     modalFeedbackRequest.classList.remove('show')
-    setBodyUnLock()
-    setTransition()
+    bodyToggleLock(false)
+    setTransition(false)
   }
 }
 
-const setBodyLock = () => {
-  const pageWrapper      = document.querySelector('.page'),
-        lockPaddingValue = window.innerWidth - pageWrapper.offsetWidth
+function bodyToggleLock(isLock) {
+  const pageWrapper      = document.querySelector('.page')
+  const lockPaddingValue = window.innerWidth - pageWrapper.offsetWidth
 
-  if (lockPaddingElements.length > 0) {
+  if (lockPaddingElements) {
     lockPaddingElements.forEach((element) => {
-      element.style.paddingRight = `${lockPaddingValue}px`
+      element.style.paddingRight = isLock ? `${lockPaddingValue}px` : '0px'
       element.style.transition = 'none'
     })
-    lockPosition.style.right = 15 + lockPaddingValue + 'px'
-    body.style.paddingRight = `${lockPaddingValue}px`
-    body.classList.add('lock')
   }
-}
-
-
-const setBodyUnLock = () => {
-  setTimeout(() => {
-    if (lockPaddingElements.length > 0) {
-      lockPaddingElements.forEach((element) => {
-        element.style.paddingRight = '0px'
-        element.style.transition = 'none'
-      })
-    }
-    lockPosition.style.right = '15px'
-    body.style.paddingRight = '0px'
-    body.classList.remove('lock')
-  }, TIMEOUT)
+  lockPosition.style.right = 15 + (isLock ? lockPaddingValue : 0) + 'px'
+  body.style.paddingRight = isLock ? `${lockPaddingValue}px` : '0px'
+  body.classList.toggle('lock', isLock)
 }
 
 // Возвращение свойства transition после закрытия модального окна
-const setTransition = () => {
+function setTransition(isLock) {
   setTimeout(() => {
-    if (lockPaddingElements.length > 0) {
+    if (lockPaddingElements) {
       lockPaddingElements.forEach(element => {
-        element.style.transition = 'all 280ms ease 0ms'
+        element.style.transition = isLock ? 'none' : 'all 280ms ease 0ms'
       })
     }
   }, TIMEOUT + 500)
@@ -110,24 +97,59 @@ const navHeaderMenu = document.querySelector('.nav-header__menu-list')
 let isBodyLock      = false
 const setIsBodyLock = () => {
   isBodyLock = !isBodyLock
-  isBodyLock ? setBodyLock() : setBodyUnLock()
+  setTransition(isBodyLock)
+  bodyToggleLock(isBodyLock)
 }
 if (burgerBtn) {
   burgerBtn.onclick = () => {
     burgerBtn.classList.toggle('nav-header__burger--active')
     navHeaderMenu.classList.toggle('nav-header__menu-list--active')
     setIsBodyLock()
-    setTransition()
   }
 }
 // Аккордеон
-const accordionItems = document.querySelectorAll('.faq-accordion__item')
+(() => {
+  const accordionItems = document.querySelectorAll('.faq-accordion__item')
+  const accordionContainer = document.querySelector('.faq-accordion')
 
-if (accordionItems.length > 0) {
-  accordionItems.forEach((accordionItem) => {
-    accordionItem.onclick = () => {
-      accordionItems.forEach((activeItem) => activeItem.classList.remove('active'))
-      accordionItem.classList.add('active')
+  accordionItems.forEach((item, index) => {
+    const header = item.querySelector('.item__header')
+    const content = item.querySelector('.item__body')
+
+    if (item.hasAttribute('data-open')) {
+      item.classList.add('active')
+      content.style.height = `${content.scrollHeight}px`
     }
+    const colorBackground = item.dataset.colorBack
+    const colorBorder = item.dataset.colorBorder
+
+    if (colorBackground || colorBorder) {
+      item.style.background = colorBackground
+      item.style.borderColor = colorBorder
+    }
+
+    header.addEventListener('click', () => {
+      item.classList.toggle('active')
+      if (item.classList.contains('active')) {
+        content.style.height = `${content.scrollHeight}px`
+      } else {
+        content.style.height = 0
+      }
+
+      if (accordionContainer.dataset.autoClosing === 'true') {
+        removeOpen(index)
+      }
+    })
   })
-}
+
+  function removeOpen(i) {
+    accordionItems.forEach((item, index) => {
+      if (i != index) {
+        const content = item.querySelector('.item__body')
+
+        item.classList.remove('active')
+        content.style.height = 0
+      }
+    })
+  }
+})()

@@ -1,26 +1,26 @@
-const menuNav            = document.querySelector('.nav-header__menu-list')
-const menuNavItemLinks   = document.querySelectorAll('._link')
-const sectionIdInNavMenu = document.querySelectorAll('._section')
+const navMenu = document.querySelector('.nav-header__menu-list')
+const navLinks = document.querySelectorAll('._link')
+const section = document.querySelectorAll('._section')
 
 const getId = (link) => link.getAttribute('href').replace('#', '')
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      menuNavItemLinks.forEach((link) => {
+      navLinks.forEach((link) => {
         link.classList.toggle('active', getId(link) === entry.target.id)
       })
     }
   })
 }, {
-  threshold: 0.7,
+  threshold: [0.15, 0.7],
 })
 
-if (sectionIdInNavMenu.length > 0) {
-  sectionIdInNavMenu.forEach((section) => observer.observe(section))
+if (section) {
+  section.forEach((section) => observer.observe(section))
 }
 
-menuNav.onclick = ((event) => {
+navMenu.onclick = (event) => {
   if (event.target.classList.contains('_link')) {
     event.preventDefault()
 
@@ -30,4 +30,4 @@ menuNav.onclick = ((event) => {
     })
     onClickNavLinks()
   }
-})
+}

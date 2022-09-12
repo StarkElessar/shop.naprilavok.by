@@ -524,44 +524,6 @@ ChiefSlider.prototype.moveTo = function (index) {
 ChiefSlider.prototype.refresh = function () {
   this._refresh();
 };
-// document.addEventListener('DOMContentLoaded', function () {
-//   // конечная дата, например 1 июля 2021
-//   const deadline = new Date(2021, 09, 11);
-//   // id таймера
-//   let timerId = null;
-//   // склонение числительных
-//   function declensionNum(num, words) {
-//     return words[(num % 100 > 4 && num % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(num % 10 < 5) ? num % 10 : 5]];
-//   }
-//   // вычисляем разницу дат и устанавливаем оставшееся времени в качестве содержимого элементов
-//   function countdownTimer() {
-//     const diff = deadline - new Date();
-//     if (diff <= 0) {
-//       clearInterval(timerId);
-//     }
-//     const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
-//     const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
-//     const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
-//     const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
-//     $days.textContent = days < 10 ? '0' + days : days;
-//     $hours.textContent = hours < 10 ? '0' + hours : hours;
-//     $minutes.textContent = minutes < 10 ? '0' + minutes : minutes;
-//     $seconds.textContent = seconds < 10 ? '0' + seconds : seconds;
-//     $days.dataset.title = declensionNum(days, ['день', 'дня', 'дней']);
-//     $hours.dataset.title = declensionNum(hours, ['час', 'часа', 'часов']);
-//     $minutes.dataset.title = declensionNum(minutes, ['минута', 'минуты', 'минут']);
-//     $seconds.dataset.title = declensionNum(seconds, ['секунда', 'секунды', 'секунд']);
-//   }
-//   // получаем элементы, содержащие компоненты даты
-//   const $days = document.querySelector('.timer__days');
-//   const $hours = document.querySelector('.timer__hours');
-//   const $minutes = document.querySelector('.timer__minutes');
-//   const $seconds = document.querySelector('.timer__seconds');
-//   // вызываем функцию countdownTimer
-//   countdownTimer();
-//   // вызываем функцию countdownTimer каждую секунду
-//   timerId = setInterval(countdownTimer, 1000);
-// });
 
 const currencyRate = 2.5795
 // 1 Sheet Polycarbonate
@@ -2657,176 +2619,174 @@ const renderHTML = (catalogData, placeToRender, renderHTMLFunction) => {
   })
 }
 
-const getHTMLAbout = (props) => {
-  return (`
-    <div class="about__item">
-      <div class="about__item-img">
-        <img src="./img/icon${props.imgUrl}" alt="icon" class="lazy">
-      </div>
-      <h4 class="about__item-title">${props.title}</h4>
-      <span class="about__item-description">${props.description}</span>
+const getHTMLAbout = (props) => `
+  <div class="about__item">
+    <div class="about__item-img">
+      <img src="./img/icon${props.imgUrl}" alt="icon" class="lazy">
     </div>
-  `)
-}
+    <h4 class="about__item-title">${props.title}</h4>
+    <span class="about__item-description">${props.description}</span>
+  </div>
+`
 
-const getHTMLMakepurchase = (props) => {
-  return (`
-    <div class="makepurchase__item">
-      <span class="makepurchase__number">${props.id}</span>
-      <div class="makepurchase__subtitle">
-        <span class="${props.className}">${props.subtitle} шаг</span>
-        </div>
-        <div class="makepurchase__item-title">
-        <p>${props.title}</p>
-        </div>
-        <div class="makepurchase__item-text">
-        <p>${props.description}</p>
+const getHTMLMakepurchase = (props) => `
+  <div class="makepurchase__item">
+    <span class="makepurchase__number">${props.id}</span>
+    <div class="makepurchase__subtitle">
+      <span class="${props.className}">${props.subtitle} шаг</span>
       </div>
+      <div class="makepurchase__item-title">
+      <p>${props.title}</p>
+      </div>
+      <div class="makepurchase__item-text">
+      <p>${props.description}</p>
     </div>
-  `)
-}
+  </div>
+`
 
-const getHTMLCatalogTeplic = (props) => {
-
-  return (`
-    <div class="catalog__card">
-      <div class="catalog__card-title">
-        <h4>${props.title}</h4>
-      </div>
-      <div class="catalog__card-slider slider">
-        <div class="slider__container">
-          <div class="slider__wrapper">
-            <div class="slider__items">
-              ${props.images.map(getImageHTML).join('')}
-            </div>
+const getHTMLCatalogTeplic = (props) => `
+  <div class="catalog__card">
+    <div class="catalog__card-title">
+      <h4>${props.title}</h4>
+    </div>
+    <div class="catalog__card-slider slider">
+      <div class="slider__container">
+        <div class="slider__wrapper">
+          <div class="slider__items">
+            ${props.images.map(getImageHTML).join('')}
           </div>
         </div>
-        <a href="/" class="slider__control" data-slide="prev"></a>
-        <a href="/" class="slider__control" data-slide="next"></a>
-        <ol class="slider__indicators">${props.numberIndicators.map(getSliderIndicator).join('')}</ol>
       </div>
-      <form class="catalog__card-content calculator-greenhouses">
-        <input type="hidden" name="product" value="${props.productName}">
-        <div class="catalog__card-table card-table">
-          <div class="card-table__row">
-            <div class="card-table__column-1">Арочный профиль</div>
-            <div class="card-table__column-2">${props.tube} мм</div>
-          </div>
-          <div class="card-table__row">
-            <div class="card-table__column-1">Покрытие металла</div>
-            <div class="card-table__column-2">Оцинковка</div>
-          </div>
-          <div class="card-table__row">
-            <div class="card-table__column-1">Ширина теплицы</div>
-            <div class="card-table__column-2">${props.width} м</div>
-          </div>
-          <div class="card-table__row">
-            <div class="card-table__column-1">Высота теплицы</div>
-            <div class="card-table__column-2">${props.height} м</div>
-          </div>
-          <div class="card-table__row">
-            <div class="card-table__column-1">Поликарбонат</div>
-            <div class="card-table__column-2">3 мм</div>
-          </div>
-          <div class="card-table__row">
-            <div class="card-table__column-1">Грунтозацепы</div>
-            <div class="card-table__column-2">245 мм</div>
-          </div>
+      <a href="/" class="slider__control" data-slide="prev"></a>
+      <a href="/" class="slider__control" data-slide="next"></a>
+      <ol class="slider__indicators">${props.numberIndicators
+        .map(getSliderIndicator)
+        .join('')}</ol>
+    </div>
+    <form class="catalog__card-content calculator-greenhouses">
+      <input type="hidden" name="product" value="${props.productName}">
+      <div class="catalog__card-table card-table">
+        <div class="card-table__row">
+          <div class="card-table__column-1">Арочный профиль</div>
+          <div class="card-table__column-2">${props.tube} мм</div>
         </div>
-        <div class="catalog__card-options">
-          <p>Выберите дуги:</p>
-          <div class="input__wrapper">
-            <label class="catalog__card-label">
-              <input type="radio" name="arc_type" value="demountable" checked>
-              <span>Разборные</span>
-            </label>
-            <label class="catalog__card-label">
-              <input type="radio" name="arc_type" value="one-piece">
-              <span>Цельные</span>
-            </label>
-          </div>
-          <p>Выберите длину теплицы:</p>
-          <div class="input__wrapper">
-            <label class="catalog__card-label" for="${props.id}-4m">
-              <input type="radio" id="${props.id}-4m" name="length" value="4m" checked>
-              <span>4 м</span>
-            </label>
-            <label class="catalog__card-label" for="${props.id}-6m">
-              <input type="radio" id="${props.id}-6m" name="length" value="6m">
-              <span>6 м</span>
-            </label>
-            <label class="catalog__card-label" for="${props.id}-8m">
-              <input type="radio" id="${props.id}-8m" name="length" value="8m">
-              <span>8 м</span>
-            </label>
-            <label class="catalog__card-label" for="${props.id}-10m">
-              <input type="radio" id="${props.id}-10m" name="length" value="10m">
-              <span>10 м</span>
-            </label>
-          </div>
-          <p>Шаг между дугами:</p>
-          <div class="input__wrapper">
-            ${Object.keys(props.arcStep).map((key, index) => {
-    const { arcStep } = props
-    const checked = index === 0 ? 'checked' : ''
-
-    return (`
-                  <label class="catalog__card-label" for="${props.id}-${arcStep[key]}sm">
-                    <input type="radio" id="${props.id}-${arcStep[key]}sm" name="arc_step" value="${arcStep[key]}" ${checked}>
-                    <span>${[key]} м</span>
-                  </label>
-                `)
-  }).join('')
-    }
-          </div>
-          <p>Толщина поликарбоната:</p>
-          <div class="input__wrapper">
-
-            ${props.polycarbonate.map((number, index) => {
+        <div class="card-table__row">
+          <div class="card-table__column-1">Покрытие металла</div>
+          <div class="card-table__column-2">Оцинковка</div>
+        </div>
+        <div class="card-table__row">
+          <div class="card-table__column-1">Ширина теплицы</div>
+          <div class="card-table__column-2">${props.width} м</div>
+        </div>
+        <div class="card-table__row">
+          <div class="card-table__column-1">Высота теплицы</div>
+          <div class="card-table__column-2">${props.height} м</div>
+        </div>
+        <div class="card-table__row">
+          <div class="card-table__column-1">Поликарбонат</div>
+          <div class="card-table__column-2">3 мм</div>
+        </div>
+        <div class="card-table__row">
+          <div class="card-table__column-1">Грунтозацепы</div>
+          <div class="card-table__column-2">245 мм</div>
+        </div>
+      </div>
+      <div class="catalog__card-options">
+        <p>Выберите дуги:</p>
+        <div class="input__wrapper">
+          <label class="catalog__card-label">
+            <input type="radio" name="arc_type" value="demountable" checked>
+            <span>Разборные</span>
+          </label>
+          <label class="catalog__card-label">
+            <input type="radio" name="arc_type" value="one-piece">
+            <span>Цельные</span>
+          </label>
+        </div>
+        <p>Выберите длину теплицы:</p>
+        <div class="input__wrapper">
+          <label class="catalog__card-label" for="${props.id}-4m">
+            <input type="radio" id="${props.id}-4m" name="length" value="4m" checked>
+            <span>4 м</span>
+          </label>
+          <label class="catalog__card-label" for="${props.id}-6m">
+            <input type="radio" id="${props.id}-6m" name="length" value="6m">
+            <span>6 м</span>
+          </label>
+          <label class="catalog__card-label" for="${props.id}-8m">
+            <input type="radio" id="${props.id}-8m" name="length" value="8m">
+            <span>8 м</span>
+          </label>
+          <label class="catalog__card-label" for="${props.id}-10m">
+            <input type="radio" id="${props.id}-10m" name="length" value="10m">
+            <span>10 м</span>
+          </label>
+        </div>
+        <p>Шаг между дугами:</p>
+        <div class="input__wrapper">
+          ${Object.keys(props.arcStep)
+            .map((key, index) => {
+              const { arcStep } = props
               const checked = index === 0 ? 'checked' : ''
 
-              return (`
-                          <label class="catalog__card-label" for="${props.id}-${number}mm">
-                            <input type="radio" id="${props.id}-${number}mm" name="polycarbonate" value="${number}mm" ${checked}>
-                            <span>${number} мм</span>
-                          </label>
-                        `)
-              }).join('')
-            }
-            <label class="catalog__card-label" for="${props.id}-0mm">
-              <input type="radio" id="${props.id}-0mm" name="polycarbonate" value="0mm">
-              <span>Каркас</span>
-            </label>
-            
-          </div>
+              return `
+                <label class="catalog__card-label" for="${props.id}-${
+                arcStep[key]
+              }sm">
+                  <input type="radio" id="${props.id}-${
+                arcStep[key]
+              }sm" name="arc_step" value="${arcStep[key]}" ${checked}>
+                  <span>${[key]} м</span>
+                </label>
+              `
+            }).join('')}
         </div>
-        <div class="catalog__card-price">
-          <div class="catalog__card-price--old"></div>
-          <div class="catalog__card-price--new">
-            <span class="price--new"></span> BYN
-          </div>
+        <p>Толщина поликарбоната:</p>
+        <div class="input__wrapper">
+          ${props.polycarbonate.map((number, index) => {
+            const checked = index === 0 ? 'checked' : ''
+
+            return `
+              <label class="catalog__card-label" for="${props.id}-${number}mm">
+                <input type="radio" id="${props.id}-${number}mm" name="polycarbonate" value="${number}mm" ${checked}>
+                <span>${number} мм</span>
+              </label>
+            `
+          }).join('')}
+          <label class="catalog__card-label" for="${props.id}-0mm">
+            <input type="radio" id="${
+              props.id
+            }-0mm" name="polycarbonate" value="0mm">
+            <span>Каркас</span>
+          </label>
         </div>
-        <div class="catalog__card-submit">
-          <input
-            title="Здесь можете указать Ваш номер телефона"
-            type="tel"
-            name="user_phone"
-            class="catalog__card-input"
-            placeholder="+375 (__) ___-__-__"
-            required
-          >
-          <button
-          title="Нажмите эту кнопку, чтобы забронировать скидку"
-          type="submit"
-          class="catalog__card-btn btn-blick"
-          >
-          Заказать
-          </button>
+      </div>
+      <div class="catalog__card-price">
+        <div class="catalog__card-price--old"></div>
+        <div class="catalog__card-price--new">
+          <span class="price--new"></span> BYN
         </div>
-      </form>
-    </div>
-  `)
-}
+      </div>
+      <div class="catalog__card-submit">
+        <input
+          title="Здесь можете указать Ваш номер телефона"
+          type="tel"
+          name="user_phone"
+          class="catalog__card-input"
+          placeholder="+375 (__) ___-__-__"
+          required
+        >
+        <button
+        title="Нажмите эту кнопку, чтобы забронировать скидку"
+        type="submit"
+        class="catalog__card-btn btn-blick"
+        >
+        Заказать
+        </button>
+      </div>
+    </form>
+  </div>
+`
 
 const getImageHTML = (img) => `
   <div class="slider__item catalog__card-img">
@@ -2837,9 +2797,10 @@ const getImageHTML = (img) => `
 const getSliderIndicator = (number) => `<li data-slide-to="${number}"></li>`
 
 const getHTMLAddEquipment = (props) => {
-  const srcUrl = 'src="data:image/gif;base64,R0lGODlhGQACAIAAAP///wAAACH5BAEAAAEALAAAAAAZAAIAAAIGjI+py50FADs="'
+  const srcUrl =
+    'src="data:image/gif;base64,R0lGODlhGQACAIAAAP///wAAACH5BAEAAAEALAAAAAAZAAIAAAIGjI+py50FADs="'
 
-  return (`
+  return `
     <div class="add-equipment__item item__block">
       <div class="item__img">
         <img class="lazy" ${srcUrl} data-src='img/add-equip${props.imgUrl}' alt="${props.altName}">
@@ -2852,21 +2813,19 @@ const getHTMLAddEquipment = (props) => {
         <div class="item-labels__btn modal-feedback__btn--show">Купить</div>
       </div>
     </div>
-  `)
+  `
 }
 
-const getHTMLAccordion = (props) => {
-  return (`
-    <div class="faq-accordion__item">
-      <div class="item__header">
-        <h4 class="item__header-title">${props.title}</h4>
-      </div>
-      <div class="item__body">
-        <p class="item__body-text">${props.description}</p>
-      </div>
+const getHTMLAccordion = (props) => `
+  <div class="faq-accordion__item">
+    <div class="item__header">
+      <h4 class="item__header-title">${props.title}</h4>
     </div>
-  `)
-}
+    <div class="item__body">
+      <p class="item__body-text">${props.description}</p>
+    </div>
+  </div>
+`
 
 const aboutPlace = document.querySelector('.about__items')
 const makepurchasePlace = document.querySelector('.makepurchase__items')
@@ -2879,32 +2838,6 @@ renderHTML(DATA.makepurchase, makepurchasePlace, getHTMLMakepurchase)
 renderHTML(DATA.catalogTeplic, catalogTeplicPlace, getHTMLCatalogTeplic)
 renderHTML(DATA.addEquipment, addEquipmentPlace, getHTMLAddEquipment)
 renderHTML(DATA.accordion, accordionPlace, getHTMLAccordion)
-// $(document).ready(function () {
-//   $("form.calculator-greenhouses").change(function () {
-//     var brandName           = $("input[name='product']", this).val(),
-//         arcType             = $("input[name='arc_type']:checked", this).val(),
-//         lengthDevice        = $("input[name='length']:checked", this).val(),
-//         arcStep             = $("input[name='arc_step']:checked", this).val(),
-//         polycarbonate       = $("input[name='polycarbonate']:checked", this).val(),
-//         calculationPrice    = 0
-
-//     calculationPrice += DATA.priceList[brandName][arcType][lengthDevice][arcStep][polycarbonate]
-
-//     var calculatorPriceNew    = $(".price--new", this),
-//         calculatorPriceOld    = $(".catalog__card-price--old", this)
-
-//     $({ animateNumber: brandName }).animate({ animateNumber: calculationPrice }, {
-//       duration: 200, step: (brandName) => {
-//         calculatorPriceNew.text(Number(brandName).toFixed())
-//         calculatorPriceOld.text(Number(1.15 * brandName).toFixed())
-//       },
-//       complete: () => {
-//         calculatorPriceNew.data("animateFrom", Number(calculationPrice).toFixed())
-//       }
-//     })
-//   });
-//   $("form.calculator-greenhouses").change()
-// })
 
 document.addEventListener('DOMContentLoaded', () => {
   function animationNumber(currentPrice, priceLabel) {
@@ -2942,7 +2875,10 @@ document.addEventListener('DOMContentLoaded', () => {
       animationNumber(calculationPrice, calculatorPriceNew)
     }
     calcPrice()
-    form.addEventListener('input', calcPrice)
+
+    form.querySelectorAll("input[type='radio']").forEach((radioButton) => {
+      radioButton.addEventListener('input', calcPrice)
+    })
   })
 })
 
@@ -2962,21 +2898,24 @@ testWebP(function (support) {
 const lazyLoadInstance = new LazyLoad({
   elements_selector: '.lazy'
 });
-document.addEventListener("DOMContentLoaded", () => {
-  const sectionTitles = document.querySelectorAll('.title-resize');
+document.addEventListener('DOMContentLoaded', () => {
+  const sectionTitles = document.querySelectorAll('.title-resize')
 
   const onResize = () => {
-    if (sectionTitles.length > 0) {
-      sectionTitles.forEach((title) => title.classList.toggle('title-line', window.innerWidth > 830))
+    if (sectionTitles) {
+      sectionTitles.forEach((title) => {
+        title.classList.toggle('title-line', window.innerWidth > 830)
+      })
     }
   }
 
-  window.onresize = onResize;
-  onResize();
-});
+  window.onresize = onResize
+  onResize()
+})
+
 // Переход по ссылкам с применением класса active
 const onClickNavLinks = () => {
-  if (anchorLinks.length > 0) {
+  if (anchorLinks) {
     anchorLinks.forEach((anchorLink) => {
       anchorLink.onclick = (event) => {
         event.preventDefault()
@@ -2990,29 +2929,29 @@ const onClickNavLinks = () => {
     });
   }
 }
-const menuNav            = document.querySelector('.nav-header__menu-list')
-const menuNavItemLinks   = document.querySelectorAll('._link')
-const sectionIdInNavMenu = document.querySelectorAll('._section')
+const navMenu = document.querySelector('.nav-header__menu-list')
+const navLinks = document.querySelectorAll('._link')
+const section = document.querySelectorAll('._section')
 
 const getId = (link) => link.getAttribute('href').replace('#', '')
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      menuNavItemLinks.forEach((link) => {
+      navLinks.forEach((link) => {
         link.classList.toggle('active', getId(link) === entry.target.id)
       })
     }
   })
 }, {
-  threshold: 0.7,
+  threshold: [0.15, 0.7],
 })
 
-if (sectionIdInNavMenu.length > 0) {
-  sectionIdInNavMenu.forEach((section) => observer.observe(section))
+if (section) {
+  section.forEach((section) => observer.observe(section))
 }
 
-menuNav.onclick = ((event) => {
+navMenu.onclick = (event) => {
   if (event.target.classList.contains('_link')) {
     event.preventDefault()
 
@@ -3022,7 +2961,8 @@ menuNav.onclick = ((event) => {
     })
     onClickNavLinks()
   }
-})
+}
+
 // после готовности DOM инициализация Слайдера
 document.addEventListener('DOMContentLoaded', () => {
   const catalogTeplicSlider = document.querySelectorAll('.catalog__card-slider')
@@ -3124,12 +3064,11 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 const submissionForms = () => {
-  const allForms  = document.querySelectorAll('form'),
-        allInputs = document.querySelectorAll('input')
+  const allForms  = document.querySelectorAll('form')
+  const allInputs = document.querySelectorAll('input')
 
   const postData = async (url, data) => {
-    
-    let result = await fetch(url, {
+    const result = await fetch(url, {
       method: 'POST',
       body: data
     })
@@ -3162,14 +3101,6 @@ const submissionForms = () => {
 
 window.addEventListener('DOMContentLoaded', () => {
   submissionForms()
-})
-document.addEventListener('DOMContentLoaded', () => { 
-  const creditStatusBody = document.querySelector('.credit-status')
-  const closeBtn        = document.querySelector('.credit-status__btn-close')
-  
-  closeBtn.addEventListener('click', () => {
-    creditStatusBody.classList.add('credit-status--close')
-  })
 })
 
 //Переменная для включения/отключения индикатора загрузки
@@ -3289,17 +3220,19 @@ var ymap = function () {
 }
 
 $(function () {
-
   //Запускаем основную функцию
   ymap();
-
 })
 
+const header = document.querySelector('#nav-header')
+const firstScreen = document.querySelector('#first-screen')
 
-window.addEventListener('scroll', () => {
-  const header = document.querySelector('#nav-header')
-  header.classList.toggle('sticky', document.documentElement.scrollTop > 400)
+const headerStickyObserver = new IntersectionObserver(([entry]) => {
+  header.classList.toggle('sticky', !entry.isIntersecting)
 })
+
+headerStickyObserver.observe(firstScreen)
+
 // Фикс дергания экрана при появлении Модального окна
 const TIMEOUT                 = 280
 const body                    = document.querySelector('body')
@@ -3316,64 +3249,49 @@ const closeBtnModalFeedback   = document.querySelector('.feedback-request__close
 if (showModalLegalInfoBtn && closeBtnModalLegalInfo) {
   showModalLegalInfoBtn.onclick = () => {
     modalLegalInfo.classList.add('show')
-    setBodyLock()
+    bodyToggleLock(true)
   }
   closeBtnModalLegalInfo.onclick = () => {
     modalLegalInfo.classList.remove('show')
-    setBodyUnLock()
+    bodyToggleLock(false)
+    setTransition(false)
   }
 }
-
-if (showModalFeedbackBtns.length > 0 && closeBtnModalFeedback) {
+if (showModalFeedbackBtns && closeBtnModalFeedback) {
   showModalFeedbackBtns.forEach((btn) => {
     btn.onclick = () => {
       modalFeedbackRequest.classList.add('show')
-      setBodyLock()
+      bodyToggleLock(true)
     }
   })
   closeBtnModalFeedback.onclick = () => {
     modalFeedbackRequest.classList.remove('show')
-    setBodyUnLock()
-    setTransition()
+    bodyToggleLock(false)
+    setTransition(false)
   }
 }
 
-const setBodyLock = () => {
-  const pageWrapper      = document.querySelector('.page'),
-        lockPaddingValue = window.innerWidth - pageWrapper.offsetWidth
+function bodyToggleLock(isLock) {
+  const pageWrapper      = document.querySelector('.page')
+  const lockPaddingValue = window.innerWidth - pageWrapper.offsetWidth
 
-  if (lockPaddingElements.length > 0) {
+  if (lockPaddingElements) {
     lockPaddingElements.forEach((element) => {
-      element.style.paddingRight = `${lockPaddingValue}px`
+      element.style.paddingRight = isLock ? `${lockPaddingValue}px` : '0px'
       element.style.transition = 'none'
     })
-    lockPosition.style.right = 15 + lockPaddingValue + 'px'
-    body.style.paddingRight = `${lockPaddingValue}px`
-    body.classList.add('lock')
   }
-}
-
-
-const setBodyUnLock = () => {
-  setTimeout(() => {
-    if (lockPaddingElements.length > 0) {
-      lockPaddingElements.forEach((element) => {
-        element.style.paddingRight = '0px'
-        element.style.transition = 'none'
-      })
-    }
-    lockPosition.style.right = '15px'
-    body.style.paddingRight = '0px'
-    body.classList.remove('lock')
-  }, TIMEOUT)
+  lockPosition.style.right = 15 + (isLock ? lockPaddingValue : 0) + 'px'
+  body.style.paddingRight = isLock ? `${lockPaddingValue}px` : '0px'
+  body.classList.toggle('lock', isLock)
 }
 
 // Возвращение свойства transition после закрытия модального окна
-const setTransition = () => {
+function setTransition(isLock) {
   setTimeout(() => {
-    if (lockPaddingElements.length > 0) {
+    if (lockPaddingElements) {
       lockPaddingElements.forEach(element => {
-        element.style.transition = 'all 280ms ease 0ms'
+        element.style.transition = isLock ? 'none' : 'all 280ms ease 0ms'
       })
     }
   }, TIMEOUT + 500)
@@ -3385,24 +3303,59 @@ const navHeaderMenu = document.querySelector('.nav-header__menu-list')
 let isBodyLock      = false
 const setIsBodyLock = () => {
   isBodyLock = !isBodyLock
-  isBodyLock ? setBodyLock() : setBodyUnLock()
+  setTransition(isBodyLock)
+  bodyToggleLock(isBodyLock)
 }
 if (burgerBtn) {
   burgerBtn.onclick = () => {
     burgerBtn.classList.toggle('nav-header__burger--active')
     navHeaderMenu.classList.toggle('nav-header__menu-list--active')
     setIsBodyLock()
-    setTransition()
   }
 }
 // Аккордеон
-const accordionItems = document.querySelectorAll('.faq-accordion__item')
+(() => {
+  const accordionItems = document.querySelectorAll('.faq-accordion__item')
+  const accordionContainer = document.querySelector('.faq-accordion')
 
-if (accordionItems.length > 0) {
-  accordionItems.forEach((accordionItem) => {
-    accordionItem.onclick = () => {
-      accordionItems.forEach((activeItem) => activeItem.classList.remove('active'))
-      accordionItem.classList.add('active')
+  accordionItems.forEach((item, index) => {
+    const header = item.querySelector('.item__header')
+    const content = item.querySelector('.item__body')
+
+    if (item.hasAttribute('data-open')) {
+      item.classList.add('active')
+      content.style.height = `${content.scrollHeight}px`
     }
+    const colorBackground = item.dataset.colorBack
+    const colorBorder = item.dataset.colorBorder
+
+    if (colorBackground || colorBorder) {
+      item.style.background = colorBackground
+      item.style.borderColor = colorBorder
+    }
+
+    header.addEventListener('click', () => {
+      item.classList.toggle('active')
+      if (item.classList.contains('active')) {
+        content.style.height = `${content.scrollHeight}px`
+      } else {
+        content.style.height = 0
+      }
+
+      if (accordionContainer.dataset.autoClosing === 'true') {
+        removeOpen(index)
+      }
+    })
   })
-}
+
+  function removeOpen(i) {
+    accordionItems.forEach((item, index) => {
+      if (i != index) {
+        const content = item.querySelector('.item__body')
+
+        item.classList.remove('active')
+        content.style.height = 0
+      }
+    })
+  }
+})()

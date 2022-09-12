@@ -1,6 +1,6 @@
 // Переход по ссылкам с применением класса active
 const onClickNavLinks = () => {
-  if (anchorLinks.length > 0) {
+  if (anchorLinks) {
     anchorLinks.forEach((anchorLink) => {
       anchorLink.onclick = (event) => {
         event.preventDefault()

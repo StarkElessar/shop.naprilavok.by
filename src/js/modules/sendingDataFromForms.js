@@ -1,10 +1,9 @@
 const submissionForms = () => {
-  const allForms  = document.querySelectorAll('form'),
-        allInputs = document.querySelectorAll('input')
+  const allForms  = document.querySelectorAll('form')
+  const allInputs = document.querySelectorAll('input')
 
   const postData = async (url, data) => {
-    
-    let result = await fetch(url, {
+    const result = await fetch(url, {
       method: 'POST',
       body: data
     })

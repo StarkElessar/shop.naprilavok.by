@@ -115,8 +115,6 @@ var ymap = function () {
 }
 
 $(function () {
-
   //Запускаем основную функцию
   ymap();
-
 })
